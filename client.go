@@ -621,6 +621,24 @@ func (c *LitRpcClient) SetContractRPoint(contractIndex uint64, rPoint []byte) er
 	return nil
 }
 
+// SetContractDatafeed sets a data feed by index to a contract, which is then
+// used to fetch the R-point from the oracle's REST API
+func (c *LitRpcClient) SetContractDatafeed(contractIndex uint64, feedIndex uint64) error {
+	args := new(litrpc.SetContractDatafeedArgs)
+	args.CIdx = contractIndex
+	args.Feed = feedIndex
+	reply := new(litrpc.SetContractDatafeedReply)
+	err := c.rpcConn.Call("LitRPC.SetContractDatafeed", args, reply)
+	if err != nil {
+		return err
+	}
+	if !reply.Success {
+		return fmt.Errorf("Server returned success = false")
+	}
+
+	return nil
+}
+
 // SetContractOracle configures contract [contractIndex] to use oracle with index [oracleIndex]. You need to import the oracle first.
 func (c *LitRpcClient) SetContractOracle(contractIndex, oracleIndex uint64) error {
 	args := new(litrpc.SetContractOracleArgs)
