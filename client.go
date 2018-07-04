@@ -537,7 +537,7 @@ func (c *LitRpcClient) SetContractDivision(contractIndex uint64, valueFullyOurs,
 	args := new(litrpc.SetContractDivisionArgs)
 	args.CIdx = contractIndex
 	args.ValueFullyOurs = valueFullyOurs
-	args.ValueFullyOurs = valueFullyTheirs
+	args.ValueFullyTheirs = valueFullyTheirs
 	reply := new(litrpc.SetContractDivisionReply)
 	err := c.rpcConn.Call("LitRPC.SetContractDivision", args, reply)
 	if err != nil {
