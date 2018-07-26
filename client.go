@@ -479,28 +479,12 @@ func (c *LitRpcClient) OfferContract(contractIndex uint64, peerIndex uint32) err
 	return nil
 }
 
-// AcceptContract accepts the contract with id [contractIndex]
-func (c *LitRpcClient) AcceptContract(contractIndex uint64) error {
-	args := new(litrpc.AcceptContractArgs)
+// ContractRespond accepts (true) or declines (false) a contract with id [contractIndex]
+func (c *LitRpcClient) ContractRespond(contractIndex uint64, accept bool) error {
+	args := new(litrpc.ContractRespondArgs)
 	args.CIdx = contractIndex
-	reply := new(litrpc.AcceptContractReply)
-	err := c.rpcConn.Call("LitRPC.AcceptContract", args, reply)
-	if err != nil {
-		return err
-	}
-	if !reply.Success {
-		return fmt.Errorf("Server returned success = false")
-	}
-
-	return nil
-}
-
-// DeclineContract declines the contract with id [contractIndex]
-func (c *LitRpcClient) DeclineContract(contractIndex uint64) error {
-	args := new(litrpc.DeclineContractArgs)
-	args.CIdx = contractIndex
-	reply := new(litrpc.DeclineContractReply)
-	err := c.rpcConn.Call("LitRPC.DeclineContract", args, reply)
+	reply := new(litrpc.ContractRespondReply)
+	err := c.rpcConn.Call("LitRPC.ContractRespond", args, reply)
 	if err != nil {
 		return err
 	}
