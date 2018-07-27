@@ -496,6 +496,16 @@ func (c *LitRpcClient) ContractRespond(contractIndex uint64, acceptOrDecline boo
 	return nil
 }
 
+// AcceptContract is a wrapper around ContractRespond
+func (c *LitRpcClient) AcceptContract(contractIndex uint64) error {
+	return c.ContractRespond(contractIndex, true)
+}
+
+// DeclineContract is a wrapper around ContractRespond
+func (c *LitRpcClient) DeclineContract(contractIndex uint64) error {
+	return c.ContractRespond(contractIndex, false)
+}
+
 // SettleContract settles the contract with id [contractIndex] using
 // oracle value [oracleValue] and signature [oracleSignature]
 func (c *LitRpcClient) SettleContract(contractIndex uint64, oracleValue int64, oracleSignature []byte) error {
