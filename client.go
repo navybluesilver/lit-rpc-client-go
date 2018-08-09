@@ -650,3 +650,18 @@ func (c *LitRpcClient) SetContractOracle(contractIndex, oracleIndex uint64) erro
 
 	return nil
 }
+
+// SetContractOracle configures contract [contractIndex] to use oracle with index [oracleIndex]. You need to import the oracle first.
+func (c *LitRpcClient) Sweep(address string, numTxs int) error {
+	args := new(litrpc.SweepArgs)
+	reply := new(litrpc.TxidsReply)
+
+	args.DestAdr = address
+	args.NumTx = uint32(numTxs)
+
+	err := c.rpcConn.Call("LitRPC.Sweep", args, reply)
+	if err != nil {
+		return err
+	}
+	return nil
+}
